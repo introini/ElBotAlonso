@@ -37,6 +37,8 @@ def makeImage(info):
     fileName = "proximo-partido.png"
     zone_ny = pytz.timezone("America/New_York")
     crestSize = (275,275)
+    where = ['MIA','B.A.']
+
     img = Image.new(mode = "RGBA", size = (W,H), color=(34,34,34))
 
     images = getCrests([info['local'],info['visitante']]) 
@@ -68,13 +70,13 @@ def makeImage(info):
     hora_w,hora_h = draw.textsize(hora, font=font)
     draw.text(((W-hora_w)//2,((H-hora_h)//2)+offset+hora_h+10),hora, font=font, fill="white")
 
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 20)
-    w,h = draw.textsize("EEUU")
-    draw.text(((W-w)//2-232,((H-h)//2)+offset+hora_h+5), "EEUU", font=font, fill="white")
+    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22)
+    w,h = draw.textsize(where[0])
+    draw.text(((W-w)//2-217,((H-h)//2)+offset+hora_h+6), where[0], font=font, fill="white")
 
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 20)
-    w,h = draw.textsize("ARG")
-    draw.text(((W-w)//2+200,((H-h)//2)+offset+hora_h+5), "ARG", font=font, fill="white")
+    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22 )
+    w,h = draw.textsize(where[1])
+    draw.text(((W-w)//2+203,((H-h)//2)+offset+hora_h+6), where[1], font=font, fill="white")
 
     competencia = Image.open(info['competencia'])
     competenciaImg = competencia.resize((competencia.size[0]//6,competencia.size[1]//6))
