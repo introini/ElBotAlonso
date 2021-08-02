@@ -43,6 +43,7 @@ if __name__ == '__main__':
     nameToFile = {
         'Liga Profesional de Argentina': 'lpf-2.png',
         'Copa Libertadores': 'libertadores-2.png',
+        'Copa Argentina': "copa-argentina-2.png",
         'River Plate': 'riverplate.png',
         'Lanús': 'lanus.png',
         'Huracán': 'huracan.png',
