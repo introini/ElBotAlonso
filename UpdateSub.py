@@ -1,10 +1,12 @@
 import yaml
 import praw
+from pathlib import Path
 from CARiverPlate import Standings, Fixture
 
 
 def updateStandingsWidget(standings):
-    config = yaml.load(open('keys.yml', 'r'), Loader=yaml.FullLoader)
+    configPath = Path('./keys.yml').resolve()
+    config = yaml.load(open(configPath, 'r'), Loader=yaml.FullLoader)
     reddit = praw.Reddit(
         client_id=config['client_id'],
         client_secret=config['client_secret'],
@@ -20,7 +22,8 @@ def updateStandingsWidget(standings):
             widgets.refresh()
 
 def updateNextGameWidget(updateInfo):
-    config = yaml.load(open('keys.yml', 'r'), Loader=yaml.FullLoader)
+    configPath = Path('./keys.yml').resolve()
+    config = yaml.load(open(configPath, 'r'), Loader=yaml.FullLoader)
     reddit = praw.Reddit(
         client_id=config['client_id'],
         client_secret=config['client_secret'],
@@ -74,16 +77,16 @@ if __name__ == '__main__':
     ng = Fixture.getNextGame(fixtureURL)
 
     if nameToFile[ng['local']] is not None:
-        ng['local'] = "./escudos/{}".format(nameToFile[ng['local']])
+        ng['local'] = Path("./escudos/{}".format(nameToFile[ng['local']])).resolve()
 
     if nameToFile[ng['visitante']] is not None:
-        ng['visitante'] = "./escudos/{}".format(nameToFile[ng['visitante']])
+        ng['visitante'] = Path("./escudos/{}".format(nameToFile[ng['visitante']])).resolve()
 
     if nameToFile[ng['competencia']] is not None:
-        ng['competencia'] = "./escudos/{}".format(nameToFile[ng['competencia']])
+        ng['competencia'] = Path("./escudos/{}".format(nameToFile[ng['competencia']])).resolve()
 
 
-    fixtureFilePath = "./{}".format(Fixture.makeImage(ng))
+    fixtureFilePath = Path("./{}".format(Fixture.makeImage(ng))).resolve()
     updateInfo = {'filePath': fixtureFilePath}
 
     teams = Standings.getStandings(standingsURL)

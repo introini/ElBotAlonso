@@ -3,6 +3,7 @@ from CARiverPlate import Teams
 import pandas as pd
 from datetime import datetime
 import pytz
+from pathlib import Path
 import re
 
 def getCrests(files):
