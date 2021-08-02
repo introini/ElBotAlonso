@@ -37,7 +37,7 @@ def makeImage(info):
     fileName = "proximo-partido.png"
     zone_ny = pytz.timezone("America/New_York")
     crestSize = (275,275)
-    where = ['MIA','B.A.']
+    where = ['MIA','BUE']
 
     img = Image.new(mode = "RGBA", size = (W,H), color=(34,34,34))
 
@@ -72,11 +72,11 @@ def makeImage(info):
 
     font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22)
     w,h = draw.textsize(where[0])
-    draw.text(((W-w)//2-217,((H-h)//2)+offset+hora_h+6), where[0], font=font, fill="white")
+    draw.text(((W-w)//2-220,((H-h)//2)+offset+hora_h+6), where[0], font=font, fill="white")
 
     font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22 )
     w,h = draw.textsize(where[1])
-    draw.text(((W-w)//2+203,((H-h)//2)+offset+hora_h+6), where[1], font=font, fill="white")
+    draw.text(((W-w)//2+200,((H-h)//2)+offset+hora_h+6), where[1], font=font, fill="white")
 
     competencia = Image.open(info['competencia'])
     competenciaImg = competencia.resize((competencia.size[0]//6,competencia.size[1]//6))
