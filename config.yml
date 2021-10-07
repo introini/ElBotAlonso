@@ -1,0 +1,8 @@
+standingsURL: https://espndeportes.espn.com/futbol/posiciones/_/liga/arg.1
+fixtureURL: https://espndeportes.espn.com/futbol/equipo/calendario/_/id/16/river-plate
+time_zone_1: America/New_York
+time_zone_2: America/Argentina/Buenos_Aires
+fileToUpload: proximo-partido.png
+font: NotoSansCJK-Regular.ttc
+font_color: white
+subreddit: 'CARiverPlate'

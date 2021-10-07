@@ -1,38 +1,21 @@
 import yaml
 import praw
 from pathlib import Path
-from CARiverPlate import Standings, Fixture
+from CARiverPlate import Standings, Fixture, Config
 
 
-def updateStandingsWidget(standings):
-    configPath = Path('./keys.yml').resolve()
-    config = yaml.load(open(configPath, 'r'), Loader=yaml.FullLoader)
-    reddit = praw.Reddit(
-        client_id=config['client_id'],
-        client_secret=config['client_secret'],
-        user_agent=config['user_agent'],
-        username=config['username'],
-        password=config['password']
-    )
 
-    widgets = reddit.subreddit(config['subreddit']).widgets
+def updateStandingsWidget(standings, subreddit):
+
+    widgets = reddit.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
         if widget.shortName == 'Liga Profesional':
             widget.mod.update(shortName="Liga Profesional", text=standings)
             widgets.refresh()
 
-def updateNextGameWidget(updateInfo):
-    configPath = Path('./keys.yml').resolve()
-    config = yaml.load(open(configPath, 'r'), Loader=yaml.FullLoader)
-    reddit = praw.Reddit(
-        client_id=config['client_id'],
-        client_secret=config['client_secret'],
-        user_agent=config['user_agent'],
-        username=config['username'],
-        password=config['password']
-    )
+def updateNextGameWidget(updateInfo, subreddit):
 
-    widgets = reddit.subreddit(config['subreddit']).widgets
+    widgets = reddit.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
         if widget.shortName == 'Próximo Partido':
             image_url = widgets.mod.upload_image(updateInfo['filePath'])
@@ -41,8 +24,9 @@ def updateNextGameWidget(updateInfo):
             widgets.refresh()
 
 if __name__ == '__main__':
-    standingsURL = "https://espndeportes.espn.com/futbol/posiciones/_/liga/arg.1" 
-    fixtureURL = "https://espndeportes.espn.com/futbol/equipo/calendario/_/id/16/river-plate"
+
+    config = Config.loadConf()
+
     nameToFile = {
         'Liga Profesional de Argentina': 'lpf-2.png',
         'Copa Libertadores': 'libertadores-2.png',
@@ -74,22 +58,36 @@ if __name__ == '__main__':
         'Atlético Tucumán': 'atleticotucuman.png'
     }
 
-    ng = Fixture.getNextGame(fixtureURL)
+    ng = Fixture.getNextGame(config['fixtureURL'])
+    ng = {**ng, **config} # combine config and info from web into a single dict
 
     if nameToFile[ng['local']] is not None:
-        ng['local'] = Path("./escudos/{}".format(nameToFile[ng['local']])).resolve()
+        ng['local'] = Path("escudos/{}".format(nameToFile[ng['local']])).resolve()
 
     if nameToFile[ng['visitante']] is not None:
-        ng['visitante'] = Path("./escudos/{}".format(nameToFile[ng['visitante']])).resolve()
+        ng['visitante'] = Path("escudos/{}".format(nameToFile[ng['visitante']])).resolve()
 
     if nameToFile[ng['competencia']] is not None:
-        ng['competencia'] = Path("./escudos/{}".format(nameToFile[ng['competencia']])).resolve()
+        ng['competencia'] = Path("escudos/{}".format(nameToFile[ng['competencia']])).resolve()
 
 
-    fixtureFilePath = Path("./{}".format(Fixture.makeImage(ng))).resolve()
-    updateInfo = {'filePath': fixtureFilePath}
+    fixtureFilePath = Path("{}".format(Fixture.makeImage(ng))).resolve()
+    updateInfo = {'filePath': str(fixtureFilePath)}
 
-    teams = Standings.getStandings(standingsURL)
+    teams = Standings.getStandings(config['standingsURL'])
     table = Standings.formatTable(teams)
-    updateStandingsWidget(table)
-    updateNextGameWidget(updateInfo)
+
+
+    """ Connect To Reddit and update the page """
+    keyPath = Path('./keys.yml').resolve()
+    secrets = yaml.safe_load(open(keyPath, 'r'))
+    reddit = praw.Reddit(
+        client_id=secrets['client_id'],
+        client_secret=secrets['client_secret'],
+        user_agent=secrets['user_agent'],
+        username=secrets['username'],
+        password=secrets['password'],
+    )
+
+    updateStandingsWidget(table, config['subreddit'])
+    updateNextGameWidget(updateInfo, config['subreddit'])

@@ -1,5 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw
-from CARiverPlate import Teams
+from CARiverPlate import Teams, Config
 import pandas as pd
 from datetime import datetime
 import pytz
@@ -51,10 +51,10 @@ def getTimes(rawMatchTime, tz1, tz2):
 
 def makeImage(info):
 
-    matchTime = getTimes(info['hora'], "America/New_York", "America/Argentina/Buenos_Aires")
+    matchTime = getTimes(info['hora'], info['time_zone_1'], info['time_zone_2'])
 
     W, H = (800, 600)
-    fileName = "proximo-partido.png"
+    fileName = info['fileToUpload']
     crestSize = (275,275)
     where = ['MIA','BUE']
 
@@ -70,24 +70,24 @@ def makeImage(info):
 
     fecha = info['fecha']
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 69)
+    font = ImageFont.truetype(info['font'], 69)
     w,h = draw.textsize(fecha, font=font)
-    draw.text(((W-w)//2,((H-h)//2)+offset),fecha, font=font, fill="white")
+    draw.text(((W-w)//2,((H-h)//2)+offset),fecha, font=font, fill=info['font_color'])
 
     hora = "{} / {}".format(matchTime[0],matchTime[1])
 
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 40)
+    font = ImageFont.truetype(info['font'], 40)
     hora_w,hora_h = draw.textsize(hora, font=font)
-    draw.text(((W-hora_w)//2,((H-hora_h)//2)+offset+hora_h+10),hora, font=font, fill="white")
+    draw.text(((W-hora_w)//2,((H-hora_h)//2)+offset+hora_h+10),hora, font=font, fill=info['font_color'])
 
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22)
+    font = ImageFont.truetype(info['font'], 22)
     w,h = draw.textsize(where[0])
-    draw.text(((W-w)//2-220,((H-h)//2)+offset+hora_h+6), where[0], font=font, fill="white")
+    draw.text(((W-w)//2-220,((H-h)//2)+offset+hora_h+6), where[0], font=font, fill=info['font_color'])
 
-    font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 22 )
+    font = ImageFont.truetype(info['font'], 22 )
     w,h = draw.textsize(where[1])
-    draw.text(((W-w)//2+200,((H-h)//2)+offset+hora_h+6), where[1], font=font, fill="white")
+    draw.text(((W-w)//2+200,((H-h)//2)+offset+hora_h+6), where[1], font=font, fill=info['font_color'])
 
     competencia = Image.open(info['competencia'])
     competenciaImg = competencia.resize((competencia.size[0]//6,competencia.size[1]//6))
