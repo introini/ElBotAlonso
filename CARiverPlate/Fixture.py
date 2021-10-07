@@ -51,7 +51,7 @@ def getTimes(rawMatchTime, tz1, tz2):
 
 def makeImage(info):
 
-    matchTime = getTimes(info['hora'])
+    matchTime = getTimes(info['hora'], "America/New_York", "America/Argentina/Buenos_Aires")
 
     W, H = (800, 600)
     fileName = "proximo-partido.png"
