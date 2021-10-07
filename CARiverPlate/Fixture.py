@@ -33,10 +33,28 @@ def getNextGame(url):
     
     return nextGame
 
+def getTimes(rawMatchTime, tz1, tz2):
+    """
+    Return a tuple of strings
+
+    Converts raw time to the given time zones
+    """
+    zone_ny = pytz.timezone(tz1)
+    hora = pd.Timestamp(rawMatchTime)
+    hora = zone_ny.localize(hora)
+    hora_eeuu = hora.tz_convert(tz=tz1)
+    hora_arg = hora.tz_convert(tz=tz2)
+    hora_arg = str(hora_arg.strftime("%I:%M %p"))
+    hora_eeuu  = str(hora_eeuu.strftime("%I:%M %p"))
+
+    return (hora_eeuu, hora_arg)
+
 def makeImage(info):
+
+    matchTime = getTimes(info['hora'])
+
     W, H = (800, 600)
     fileName = "proximo-partido.png"
-    zone_ny = pytz.timezone("America/New_York")
     crestSize = (275,275)
     where = ['MIA','BUE']
 
@@ -56,15 +74,7 @@ def makeImage(info):
     w,h = draw.textsize(fecha, font=font)
     draw.text(((W-w)//2,((H-h)//2)+offset),fecha, font=font, fill="white")
 
-    hora = pd.Timestamp(info['hora'])
-    hora = zone_ny.localize(hora)
-    hora_arg = hora.tz_convert(tz="America/Argentina/Buenos_Aires")
-    hora_eeuu = hora.tz_convert(tz="America/New_York")
-
-    hora_arg = str(hora_arg.strftime("%I:%M %p"))
-    hora_eeuu  = str(hora_eeuu.strftime("%I:%M %p"))
-
-    hora = "{} / {}".format(hora_eeuu, hora_arg)
+    hora = "{} / {}".format(matchTime[0],matchTime[1])
 
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("NotoSansCJK-Regular.ttc", 40)
@@ -85,6 +95,6 @@ def makeImage(info):
 
     img.save(fileName, "PNG")
 
-    # img.show()
+    img.show()
 
     return fileName
