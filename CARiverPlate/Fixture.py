@@ -6,15 +6,17 @@ import pytz
 from pathlib import Path
 import re
 
-def getCrests(files):
-    size = 128, 128
+def get_crests(files):
 
     im1 = Image.open(files[0])
     im2 = Image.open(files[1])
 
     return (im1, im2)
 
-def getNextGame(url):
+def get_next_game(url):
+
+    logger = Config.logger()
+
     df = pd.read_html(url)
     nextGameRow = df[0].iloc[0]
     fecha = re.sub(r'\.,','',nextGameRow['FECHA']).strip('.')
@@ -30,15 +32,17 @@ def getNextGame(url):
         'local': local,
         'visitante': visitante
     }
-    
+    logger.info(f'Next Game: {nextGame}')
+
     return nextGame
 
-def getTimes(rawMatchTime, tz1, tz2):
+def get_times(rawMatchTime, tz1, tz2):
     """
     Return a tuple of strings
 
     Converts raw time to the given time zones
     """
+    logger = Config.logger()
     zone_ny = pytz.timezone(tz1)
     hora = pd.Timestamp(rawMatchTime)
     hora = zone_ny.localize(hora)
@@ -47,11 +51,13 @@ def getTimes(rawMatchTime, tz1, tz2):
     hora_arg = str(hora_arg.strftime("%I:%M %p"))
     hora_eeuu  = str(hora_eeuu.strftime("%I:%M %p"))
 
+    logger.info(f': EST {hora_eeuu} BUE {hora_arg}')
+
     return (hora_eeuu, hora_arg)
 
-def makeImage(info):
+def make_image(info):
 
-    matchTime = getTimes(info['hora'], info['time_zone_1'], info['time_zone_2'])
+    matchTime = get_times(info['hora'], info['time_zone_1'], info['time_zone_2'])
 
     W, H = (800, 600)
     fileName = info['fileToUpload']
@@ -60,7 +66,7 @@ def makeImage(info):
 
     img = Image.new(mode = "RGBA", size = (W,H), color=(34,34,34))
 
-    images = getCrests([info['local'],info['visitante']]) 
+    images = get_crests([info['local'],info['visitante']]) 
     image1 = images[0].resize(crestSize)
     image2 = images[1].resize(crestSize)
     img.paste(image1, (20,20), image1)
@@ -94,7 +100,5 @@ def makeImage(info):
     img.paste(competenciaImg, ((W-competenciaImg.size[0])//2,((H-competenciaImg.size[1])-28)), competenciaImg)
 
     img.save(fileName, "PNG")
-
-    img.show()
 
     return fileName

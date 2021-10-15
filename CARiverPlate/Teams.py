@@ -1,10 +1,8 @@
-import pandas as pd
 from bs4 import BeautifulSoup as bs
 import requests
-import numpy as np
 import re
 
-def getTeams(url):
+def get_teams(url):
     '''
     Gets a list of teams from the ESPN website and returns a list with
     shortend a version of each team name.
@@ -21,7 +19,7 @@ def getTeams(url):
     return teams
 
 
-def getShortNames(teams):
+def get_short_names(teams):
 
     shortNames = {
         'Estudiantes de La Plata': 'Estudiantes',
@@ -35,8 +33,6 @@ def getShortNames(teams):
         'Vélez Sarsfield': 'Vélez',
         'River Plate': '**River Plate**'
     }
-
-    shortendList = []
 
     for i,t in enumerate(teams):
         if t in shortNames:
