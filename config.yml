@@ -5,4 +5,6 @@ time_zone_2: America/Argentina/Buenos_Aires
 fileToUpload: proximo-partido.png
 font: NotoSansCJK-Regular.ttc
 font_color: white
-subreddit: 'CARiverPlate'
+log_file: bot.log 
+log_level: INFO
+subreddit: 'CARiverPlateTest'
