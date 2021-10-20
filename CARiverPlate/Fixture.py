@@ -36,6 +36,30 @@ def get_next_game(url):
 
     return nextGame
 
+def parse_date(raw_date, raw_time):
+    days_map = {
+        'Lun': 'Mon','Mar': 'Tue','Mié': 'Wed','Jue': 'Thu',
+        'Vie': 'Fri','Sáb': 'Sat','Dom': 'Sun'
+    }
+
+    month_map = {'Ene': 'Jan', 'Feb': 'Feb', 'Mar': 'Mar', 
+        'Abr': 'Apr', 'May': 'May', 'Jun': 'Jun', 'Jul': 'Jul', 
+        'Ago': 'Aug', 'Sep': 'Sep', 'Oct': 'Oct', 
+        'Nov': 'Nov', 'Dic': 'Dec'}
+
+    day_of_the_week = days_map[raw_date[:3]]
+    day = raw_date[4:6]
+    month = month_map[raw_date[-3:]]
+    time = raw_time
+    year = '2021'
+    date = f'{day_of_the_week} {day} {month} {year} {time}'
+
+    game_date_time = datetime.strptime(date, "%a %d %b %Y %H:%M %p")
+    current_date_time = datetime.today().strftime("%a %d %b %Y %H:%M %p")
+    current_date_time = datetime.strptime(current_date_time, "%a %d %b %Y %H:%M %p")
+
+    return (current_date_time, game_date_time)
+
 def get_times(rawMatchTime, tz1, tz2):
     """
     Return a tuple of strings
