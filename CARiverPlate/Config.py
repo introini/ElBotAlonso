@@ -22,5 +22,5 @@ def logger():
     'DEBUG': logging.DEBUG, 
     'ERROR': logging.ERROR }
 
-    logging.basicConfig(filename=conf['log_file'], encoding='utf-8', level=level[log_level])
+    logging.basicConfig(filename=conf['log_file'], level=level[log_level])
     return logging.getLogger()
