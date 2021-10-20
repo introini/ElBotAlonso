@@ -1,10 +1,10 @@
-from CARiverPlate import Config, Fixture, Standings, UpdateSub
+"""Update the River Plate subreddit"""
 from pathlib import Path
-import yaml, praw
-
+import yaml
+import praw
+from CARiverPlate import Config, Fixture, Standings, UpdateSub
 
 if __name__ == '__main__':
-
     config = Config.loadConf()
 
     nameToFile = {
@@ -69,5 +69,9 @@ if __name__ == '__main__':
         password=secrets['password'],
     )
 
-    # UpdateSub.updateStandingsWidget(table, reddit, config['subreddit'])
-    # UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
+    UpdateSub.updateStandingsWidget(table, reddit, config['subreddit'])
+    
+    """ Don't update NGW before the game time """
+    dates = Fixture.parse_date(ng['fecha'], ng['hora'])
+    if dates[0] > dates[1]:
+        UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
