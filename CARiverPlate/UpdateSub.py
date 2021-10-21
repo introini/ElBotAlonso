@@ -2,9 +2,8 @@ from CARiverPlate import Standings, Fixture, Config
 
 
 def updateStandingsWidget(standings, connection, subreddit):
-    config = Config.loadConf()
 
-    logger = Config.logger()
+    logger = Config.logger(__name__)
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
         if widget.shortName == 'Liga Profesional':
@@ -14,7 +13,7 @@ def updateStandingsWidget(standings, connection, subreddit):
 
 def updateNextGameWidget(updateInfo, connection, subreddit):
 
-    logger = Config.logger()
+    logger = Config.logger(__name__)
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
         if widget.shortName == 'Próximo Partido':

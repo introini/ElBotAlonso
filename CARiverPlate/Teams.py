@@ -1,6 +1,9 @@
+import logging
 from bs4 import BeautifulSoup as bs
 import requests
 import re
+
+from CARiverPlate import Config
 
 def get_teams(url):
     '''
@@ -20,7 +23,10 @@ def get_teams(url):
 
 
 def get_short_names(teams):
-
+    '''
+    Clean up the long names from the list to fit in the matkdown table
+    '''
+    logger = Config.logger(__name__)
     shortNames = {
         'Estudiantes de La Plata': 'Estudiantes',
         'Godoy Cruz Antonio Tomba': 'Godoy Cruz',
@@ -37,5 +43,5 @@ def get_short_names(teams):
     for i,t in enumerate(teams):
         if t in shortNames:
             teams[i] = shortNames[t]
-
+    logging.info(teams)
     return teams        
