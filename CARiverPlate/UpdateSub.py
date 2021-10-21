@@ -22,3 +22,13 @@ def updateNextGameWidget(updateInfo, connection, subreddit):
             widget.mod.update(data=image_data)
             widgets.refresh()
             logger.info(f'[{widget.shortName}] Updated next game image')
+
+def update_stats(stats, connection, subreddit):
+
+    logger = Config.logger(__name__)
+    widgets = connection.subreddit(subreddit).widgets
+    for widget in widgets.sidebar:
+        if widget.shortName == 'Estadísticas':
+            widget.mod.update(shortName="Estadísticas", text=stats)
+            widgets.refresh()
+            logger.info(f'[{widget.shortName}] Updated stats')
