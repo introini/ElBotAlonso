@@ -15,7 +15,7 @@ def get_crests(files):
 
 def get_next_game(url):
 
-    logger = Config.logger()
+    logger = Config.logger(__name__)
 
     df = pd.read_html(url)
     nextGameRow = df[0].iloc[0]
@@ -32,7 +32,7 @@ def get_next_game(url):
         'local': local,
         'visitante': visitante
     }
-    logger.info(f'Next Game: {nextGame}')
+    logger.info(f'{nextGame}')
 
     return nextGame
 
@@ -66,7 +66,7 @@ def get_times(rawMatchTime, tz1, tz2):
 
     Converts raw time to the given time zones
     """
-    logger = Config.logger()
+    logger = Config.logger(__name__)
     zone_ny = pytz.timezone(tz1)
     hora = pd.Timestamp(rawMatchTime)
     hora = zone_ny.localize(hora)
@@ -75,11 +75,13 @@ def get_times(rawMatchTime, tz1, tz2):
     hora_arg = str(hora_arg.strftime("%I:%M %p"))
     hora_eeuu  = str(hora_eeuu.strftime("%I:%M %p"))
 
-    logger.info(f': EST {hora_eeuu} BUE {hora_arg}')
+    logger.info(f'{hora_eeuu}(EST), {hora_arg}(BUE)')
 
     return (hora_eeuu, hora_arg)
 
 def make_image(info):
+
+    logger = Config.logger(__name__)
 
     matchTime = get_times(info['hora'], info['time_zone_1'], info['time_zone_2'])
 
@@ -124,5 +126,6 @@ def make_image(info):
     img.paste(competenciaImg, ((W-competenciaImg.size[0])//2,((H-competenciaImg.size[1])-28)), competenciaImg)
 
     img.save(fileName, "PNG")
-
+    logger.info(f'{fileName} saved.')
+    
     return fileName

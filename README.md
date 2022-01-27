@@ -1,3 +1,3 @@
 # ElBotAlonso
 
-The one and only [r/CARiverPlate](https://www.reddit.com/r/CARiverPlate) bot. ElBotAlonso handles some of the automated features of the River Plate subreddit, including the Liga Profesional de Argentina standings table and Next Game sidebar widgets.
+ElBotAlonso handles some of the automated features of the [River Plate subreddit](https://www.reddit.com/r/CARiverPlate), including the Liga Profesional de Argentina standings table and Next Game sidebar widgets.

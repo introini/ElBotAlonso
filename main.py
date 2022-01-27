@@ -2,7 +2,7 @@
 from pathlib import Path
 import yaml
 import praw
-from CARiverPlate import Config, Fixture, Standings, UpdateSub
+from CARiverPlate import Config, Fixture, Standings, Stats, UpdateSub
 
 if __name__ == '__main__':
     config = Config.loadConf()
@@ -57,6 +57,9 @@ if __name__ == '__main__':
 
     teams = Standings.get_standings(config['standingsURL'])
     table = Standings.format_table(teams)
+    top_scorers = Stats.top_scorers(config['scorerStatsURL'])
+    top_assists = Stats.top_assists(config['scorerStatsURL'])
+    stats = f'{top_scorers}\n{top_assists}\n'
 
 
     """ Connect To Reddit and update the page """
@@ -71,7 +74,7 @@ if __name__ == '__main__':
     )
 
     UpdateSub.updateStandingsWidget(table, reddit, config['subreddit'])
-    
+    UpdateSub.update_stats(stats, reddit, config['subreddit'])
     """ Don't update NGW before the game time """
     dates = Fixture.parse_date(ng['fecha'], ng['hora'])
     if dates[0] > dates[1]:
