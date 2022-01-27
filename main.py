@@ -77,5 +77,5 @@ if __name__ == '__main__':
     UpdateSub.update_stats(stats, reddit, config['subreddit'])
     """ Don't update NGW before the game time """
     dates = Fixture.parse_date(ng['fecha'], ng['hora'])
-    if dates[0] > dates[1]:
+    if dates[0] < dates[1]:
         UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
