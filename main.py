@@ -8,6 +8,7 @@ if __name__ == '__main__':
     config = Config.loadConf()
 
     nameToFile = {
+        'Club Friendly': 'amistoso.png',
         'Liga Profesional de Argentina': 'lpf-2.png',
         'Copa Libertadores': 'libertadores-2.png',
         'Copa Argentina': "copa-argentina-2.png",
