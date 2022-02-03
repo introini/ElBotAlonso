@@ -20,16 +20,21 @@ if __name__ == '__main__':
     if nameToFile[ng['competencia']] is not None:
         ng['competencia'] = Path("escudos/{}".format(nameToFile[ng['competencia']])).resolve()
 
-
     fixtureFilePath = Path("{}".format(Fixture.make_image(ng))).resolve()
     updateInfo = {'filePath': str(fixtureFilePath)}
 
-    teams = Standings.get_standings(config['standingsURL'])
-    table = Standings.format_table(teams)
+    teams_table = Standings.get_standings(config['standingsURL'], groups=True)
+
+    if len(teams_table) > 1:
+        tableA = Standings.format_table(teams_table[0])
+        tableB = Standings.format_table(teams_table[1])
+        table = f"####Groupo A\n{tableA}\n\n####Groupo B\n{tableB}"
+    else:  
+        table = Standings.format_table(teams)
+    
     top_scorers = Stats.top_scorers(config['scorerStatsURL'])
     top_assists = Stats.top_assists(config['scorerStatsURL'])
     stats = f'{top_scorers}\n{top_assists}\n'
-
 
     """ Connect To Reddit and update the page """
     keyPath = Path('./keys.yml').resolve()
@@ -46,5 +51,5 @@ if __name__ == '__main__':
     UpdateSub.update_stats(stats, reddit, config['subreddit'])
     """ Don't update NGW before the game time """
     dates = Fixture.parse_date(ng['fecha'], ng['hora'])
-    if dates[0] < dates[1]:
+    if dates[0] > dates[1]:
         UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
