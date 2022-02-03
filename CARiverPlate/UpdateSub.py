@@ -7,7 +7,7 @@ def updateStandingsWidget(standings, connection, subreddit):
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
         if widget.shortName == 'Copa Liga Profesional':
-            widget.mod.update(shortName="Liga Profesional", text=standings)
+            widget.mod.update(shortName="Copa Liga Profesional", text=standings)
             widgets.refresh()
             logger.info(f'[{widget.shortName}] Updated latest standings table')
 
