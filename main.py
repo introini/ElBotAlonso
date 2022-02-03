@@ -5,39 +5,8 @@ import praw
 from CARiverPlate import Config, Fixture, Standings, Stats, UpdateSub
 
 if __name__ == '__main__':
-    config = Config.loadConf()
-
-    nameToFile = {
-        'Club Friendly': 'amistoso.png',
-        'Liga Profesional de Argentina': 'lpf-2.png',
-        'Copa Libertadores': 'libertadores-2.png',
-        'Copa Argentina': "copa-argentina-2.png",
-        'River Plate': 'riverplate.png',
-        'Lanús': 'lanus.png',
-        'Huracán': 'huracan.png',
-        'Godoy Cruz Antonio Tomba': 'godoycruz.png',
-        'Atlético-MG': 'atletico-mg.png',
-        'Vélez Sarsfield': 'velez.png',
-        'Gimnasia La Plata': 'gimnasia.png',
-        'Aldosivi': 'aldosivi.png',
-        'Sarmiento (Junín)': 'sarmiento.png',
-        'Independiente': 'independiente.png',
-        "Newell\'s Old Boys": "newells.png",
-        'Arsenal de Sarandí': 'arsenal.png',
-        'Central Córdoba (Santiago del Estero)': 'centralcordoba.png',
-        'Boca Juniors': 'bocajuniors.png',
-        'Banfield': 'banfield.png',
-        'San Lorenzo': 'sanlorenzo.png',
-        'Talleres (Córdoba)': 'talleres.png',
-        'Argentinos Juniors': 'argentinos.png',
-        'Estudiantes de La Plata': 'estudiantes.png',
-        'Patronato': 'patronato.png',
-        'Platense': 'platense.png',
-        'Racing Club': 'racing.png',
-        'Rosario Central': 'rosariocentral.png',
-        'Defensa y Justicia': 'defensayjusticia.png',
-        'Atlético Tucumán': 'atleticotucuman.png'
-    }
+    config = Config.loadConf()    
+    nameToFile = config['name_to_file']
 
     ng = Fixture.get_next_game(config['fixtureURL'])
     ng = {**ng, **config} # combine config and info from web into a single dict
