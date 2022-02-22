@@ -24,7 +24,7 @@ if __name__ == '__main__':
     updateInfo = {'filePath': str(fixtureFilePath)}
 
     teams_table = Standings.get_standings(config['standingsURL'], groups=True)
-
+    
     if len(teams_table) > 1:
         tableA = Standings.format_table(teams_table[0])
         tableB = Standings.format_table(teams_table[1])
@@ -33,8 +33,7 @@ if __name__ == '__main__':
         table = Standings.format_table(teams)
     
     top_scorers = Stats.top_scorers(config['scorerStatsURL'])
-    top_assists = Stats.top_assists(config['scorerStatsURL'])
-    stats = f'{top_scorers}\n{top_assists}\n'
+    stats = f'{top_scorers}'
 
     """ Connect To Reddit and update the page """
     keyPath = Path('./keys.yml').resolve()
@@ -50,6 +49,8 @@ if __name__ == '__main__':
     UpdateSub.updateStandingsWidget(table, reddit, config['subreddit'])
     UpdateSub.update_stats(stats, reddit, config['subreddit'])
     """ Don't update NGW before the game time """
+
+    # UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
     dates = Fixture.parse_date(ng['fecha'], ng['hora'])
     if dates[0] > dates[1]:
         UpdateSub.updateNextGameWidget(updateInfo, reddit, config['subreddit'])
