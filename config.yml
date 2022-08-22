@@ -1,6 +1,6 @@
 standingsURL: https://www.espn.com.ar/futbol/posiciones/_/liga/arg.copa_lpf
 fixtureURL: https://espndeportes.espn.com/futbol/equipo/calendario/_/id/16/river-plate
-scorerStatsURL: https://forzafootball.com/es/tournament/copa-de-la-liga-profesional-224/top-scorers
+scorerStatsURL: https://www.espn.com.ar/futbol/equipo/estadisticas/_/id/16/liga/ARG.1/vista/anotaciones
 cardStatsURL: https://www.espn.com.ar/futbol/equipo/estadisticas/_/id/16/liga/ARG.1/vista/tarjetas
 time_zone_1: America/New_York
 time_zone_2: America/Argentina/Buenos_Aires
@@ -9,7 +9,7 @@ font: NotoSansCJK-Regular.ttc
 font_color: white
 log_file: bot.log
 log_level: INFO
-subreddit: 'CARiverPlate'
+subreddit: 'CARiverPlateTest'
 name_to_file:
   Acassuso: 'acassuso.png'
   Agropecuario: 'agropecuario-argentino.png'
@@ -56,6 +56,7 @@ name_to_file:
   Ituzaingó: 'ituzaingo.png'
   JJ Urquiza: 'justo-jose-de-urquiza.png'
   Lanús: 'lanus.png'
+  Liga Profesional de Argentina: 'lpf-2.png'
   Liniers: 'liniers.png'
   Los Andes: 'los-andes.png'
   Newell's Old Boys: "newells.png"
