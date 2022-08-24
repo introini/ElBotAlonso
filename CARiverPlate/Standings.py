@@ -34,7 +34,7 @@ def format_table(table):
     Formats the table to remove unwanted columns. Also reorders
     the PTS column so that it appears after the team name.
     '''
-    table.index = table.index + 1
+    table.index += 1
     table.index.name = '#'
     table = table.drop(['GF','GC','E'], axis=1)
     cols = ['Equipo','PTS','J','G','DIF']

@@ -23,14 +23,14 @@ if __name__ == '__main__':
     fixtureFilePath = Path("{}".format(Fixture.make_image(ng))).resolve()
     updateInfo = {'filePath': str(fixtureFilePath)}
 
-    teams_table = Standings.get_standings(config['standingsURL'], groups=True)
-    
+    teams_table = Standings.get_standings(config['standingsURL'], groups=False)
+
     if len(teams_table) > 1:
         tableA = Standings.format_table(teams_table[0])
         tableB = Standings.format_table(teams_table[1])
         table = f"####Groupo A\n{tableA}\n\n####Groupo B\n{tableB}"
     else:  
-        table = Standings.format_table(teams)
+        table = Standings.format_table(teams_table[0])
     
     top_scorers = Stats.top_scorers(config['scorerStatsURL'])
     stats = f'{top_scorers}'
