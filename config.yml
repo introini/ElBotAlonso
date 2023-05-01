@@ -36,6 +36,7 @@ name_to_file:
   Colón (Santa Fe): 'colon.png'
   Copa Argentina: 'copa-argentina-2.png'
   Copa Libertadores: 'libertadores-2.png'
+  CONMEBOL Libertadores: 'libertadores-2.png'
   Defensa y Justicia: 'defensayjusticia.png'
   Deportivo Laferrere: 'deportivo-laferrere-ok.png'
   Deportivo Madryn: 'deportivo-madryn.png'
@@ -82,3 +83,17 @@ name_to_file:
   Tristán Suárez: 'tristan-suarez.png'
   Unión (Santa Fe): 'union.png'
   Vélez Sarsfield: 'velez.png'
+  Barcelona: barbarcelona-sc.png
+  Bolivar: bolivar.png
+  Cerro Porteño: cerro-porteño.png
+  Deportivo Binacional: deportivo-binacional.png
+  Flamengo: flamengo.png
+  Independiente del Valle: independiente-del-valle.png
+  Internacional: internacional.png
+  Palmeiras: palmeiras.png
+  Peñarol: peñarol.png
+  Santos: santos.png
+  Sao Paulo: saopaulo.png
+  Sporting Cristal: sporting-cristal.png
+  Deportes Tolima: tolima.png
+  Fluminense: fluminense.png
