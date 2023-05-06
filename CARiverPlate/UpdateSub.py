@@ -1,34 +1,35 @@
-from CARiverPlate import Standings, Fixture, Config
+from CARiverPlate import Config
 
 
 def updateStandingsWidget(standings, connection, subreddit):
-
     logger = Config.logger(__name__)
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
-        if widget.shortName == 'Posiciones':
+        if widget.shortName == "Posiciones":
             widget.mod.update(shortName="Posiciones", text=standings)
             widgets.refresh()
-            logger.info(f'[{widget.shortName}] Updated latest standings table')
+            logger.info(f"[{widget.shortName}] Updated latest standings table")
+
 
 def updateNextGameWidget(updateInfo, connection, subreddit):
-
     logger = Config.logger(__name__)
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
-        if widget.shortName == 'Próximo Partido':
-            image_url = widgets.mod.upload_image(updateInfo['filePath'])
-            image_data = [{'width': 800, 'height': 600, 'linkUrl': '', 'url': image_url}]
+        if widget.shortName == "Próximo Partido":
+            image_url = widgets.mod.upload_image(updateInfo["filePath"])
+            image_data = [
+                {"width": 800, "height": 600, "linkUrl": "", "url": image_url}
+            ]
             widget.mod.update(data=image_data)
             widgets.refresh()
-            logger.info(f'[{widget.shortName}] Updated next game image')
+            logger.info(f"[{widget.shortName}] Updated next game image")
+
 
 def update_stats(stats, connection, subreddit):
-
     logger = Config.logger(__name__)
     widgets = connection.subreddit(subreddit).widgets
     for widget in widgets.sidebar:
-        if widget.shortName == 'Estadísticas':
+        if widget.shortName == "Estadísticas":
             widget.mod.update(shortName="Estadísticas", text=stats)
             widgets.refresh()
-            logger.info(f'[{widget.shortName}] Updated stats')
+            logger.info(f"[{widget.shortName}] Updated stats")
