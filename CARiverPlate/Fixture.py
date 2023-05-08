@@ -219,13 +219,12 @@ def make_image(info):
     locale.setlocale(locale.LC_TIME, "es_ES.UTF-8")
 
     W, H = (800, 600)
-    crestSize = (300, 300)
-
+    crest_size = (300, 300)
     img = Image.new(mode="RGBA", size=(W, H), color=(34, 34, 34))
     images = get_crests([info["home"], info["away"]])
 
     for i, img_src in enumerate(images):
-        img_crest = img_src.resize(crestSize)
+        img_crest = img_src.resize(crest_size)
         pos_x = 20 if i == 0 else (W - img_crest.size[0]) - 20
         img.paste(img_crest, (pos_x, 30), img_crest)
 
