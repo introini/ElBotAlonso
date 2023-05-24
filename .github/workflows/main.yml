@@ -13,7 +13,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        source: "tests/a.txt,tests/b.txt"
-        target: your_server_target_folder_path
+        source: "proximo-partido.png"
+        target: ~/test
         
         
