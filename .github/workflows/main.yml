@@ -1,0 +1,19 @@
+name: scp files
+on: [workflow_dispatch, push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: copy file via ssh key
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        source: "tests/a.txt,tests/b.txt"
+        target: your_server_target_folder_path
+        
+        
