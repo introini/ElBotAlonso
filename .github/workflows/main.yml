@@ -1,5 +1,5 @@
 name: scp files
-on: [workflow_dispatch]
+on: [push]
 jobs:
 
   build:
@@ -14,6 +14,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         source: "."
-        target: ~/test
+        target: ~/scripts
         
         
